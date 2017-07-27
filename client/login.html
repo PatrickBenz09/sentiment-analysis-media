@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/login.css">
+    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="js/loginFB.js"></script>
+    <title>Login</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="card offset-4 mt-5">
+          <div class="card-header">
+            <p class="text-center mb-0">Login</p>
+          </div>
+          <form class="px-5 py-3">
+            <div class="form-group">
+              <label for="email">Email address</label>
+              <input disabled type="email" class="form-control" id="emailValue" aria-describedby="emailHelp" placeholder="Enter email">
+              <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+            </div>
+            <div class="form-group">
+              <label for="password">Password</label>
+              <input disabled type="password" class="form-control" id="passwordValue" placeholder="Password">
+            </div>
+            <button class="btn btn-primary" type="submit" name="loginBtn">Login</button>
+          </form>
+          <p class="text-center">OR</p>
+          <button class="btn btn-info mx-md-auto mb-3" type="submit" name="button" onclick="fbLogin()">Facebook</button>
+          <!-- <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
+        </fb:login-button> -->
+
+          <!--
+            Below we include the Login Button social plugin. This button uses
+            the JavaScript SDK to present a graphical Login button that triggers
+            the FB.login() function when clicked.
+          -->
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

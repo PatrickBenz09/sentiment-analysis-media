@@ -1,13 +1,15 @@
 'use strict'
 
 const express = require('express');
-const app = expres();
+const app = express();
 const bodyParser = require('body-parser');
 
-//const Index = require('./routers/index');
+const index = require('./routers/index');
 
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/library');
+mongoose.connect('mongodb://localhost/library', err => {
+  err ? console.log(err) : console.log('database connected')
+});
 
 app.use(bodyParser.urlencoded( { extended: true } ));
 app.use(bodyParser.json());

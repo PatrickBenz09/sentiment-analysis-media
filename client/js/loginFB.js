@@ -1,5 +1,5 @@
 
-axios.defaults.baseURL = 'http://localhost:3000/api/tweets';
+axios.defaults.baseURL = 'http://localhost:3000/signin';
 
 window.fbAsyncInit = function() {
 FB.init({
@@ -45,6 +45,10 @@ function checkLoginState() {
   FB.getLoginStatus(function(response) {
     statusChangeCallback(response);
   });
+}
+
+function sendToken(token) {
+  axios.post('')
 }
 
 function fbLogin() {

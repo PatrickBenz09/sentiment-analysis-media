@@ -13,6 +13,10 @@ const postSchema = new Schema({
   song: {
     type: String,
     required: [true, 'song tidak boleh kosong']
+  },
+  email: {
+    type: String,
+    required: [true, 'email tidak boleh kosong']
   }
 }, {
   timestamps: true

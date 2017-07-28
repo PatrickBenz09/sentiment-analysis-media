@@ -120,6 +120,12 @@ let nlpLogic = (req, resp) => {
 
       console.log(JSON.stringify(res, null, 2));
       console.log(JSON.stringify(response, null, 2));
+
+      console.log(`UNTUK MENDAPATKAN EMOSI BUAT MENENTUKAN LAGU,
+                   AMBIL VARIABLE DI BAWAH INI.
+                   SUDAH DALAM BENTUK STRING 1 KATA EMOSI`);
+      console.log(response.highestEmotionSpectrumFromKeywords[0][0]);
+
       resp.send(response);
     }
   });

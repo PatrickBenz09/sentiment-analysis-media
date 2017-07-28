@@ -89,13 +89,18 @@ $(function() {
 
         console.log(`${res.data.highestEmotionSpectrumFromKeywords[0][0]}: ${res.data.highestEmotionSpectrumFromKeywords[0][1]}`);
 
-        axios.post('http://localhost:3000/song', {
-          highest_emotion_from_keywords: res.data.highestEmotionSpectrumFromKeywords[0][0]
+        axios.post('http://localhost:3000/posts', {
+          post: $processed.val(),
+          emotion: res.data.highestEmotionSpectrumFromKeywords[0][0],
+          song: 'Payphone',
+          email: localstorage.getItem('emailUser')
         })
         .then(result => {
           console.log(result);
         })
-        .catch();
+        .catch(err => {
+          console.log(err);
+        });
       })
     })
     .catch(err => {

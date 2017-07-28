@@ -4,13 +4,21 @@ const FB = require('fb');
 const fb = new FB.Facebook({version: 'v2.8'});
 // require('dotenv').config()
 
-const setAccessToken = (req, res, next) => {
-  FB.setAccessToken(req.headers.accesstoken);
-  next()
-}
+// const setAccessToken = (req, res, next) => {
+//   console.log(`isis token ${JSON.stringify(req.headers)}`);
+//   next()
+// }
 
 function signin(req, res, next) {
-  let userIdFbFromLogin = req.headers.userId
+  var token = req.headers.accesstoken
+  FB.setAccessToken(req.headers.accesstoken);
+  let userIdFbFromLogin = req.headers.id
+  console.log(`
+    token: ${req.headers.accesstoken}
+    id: ${req.headers.id}
+    email: ${req.headers.email}
+    name: ${req.headers.name}
+    `);
   User.findOne({
     where: {
       userIdFb: userIdFbFromLogin}
@@ -18,14 +26,16 @@ function signin(req, res, next) {
   .then(user=> {
     if(!user) {
       User.create({
-        nama: req.headers.nama,
+        nama: req.headers.name,
         email: req.headers.email,
-        userIdFb: userIdFbFromLogin,
-        postlist: ""
+        userIdFb: userIdFbFromLogin
       })
       .then(function(){
-        var token = jwt.sign({accesstoken: accesstoken, nama: req.headers.nama, useremail:req.headers.email, userIdFb: req.headers.userId}, '24BI04PS');
+        var token = jwt.sign({accesstoken: token, nama: req.headers.name, useremail:req.headers.email, userIdFb: req.headers.id}, '24BI04PS');
         res.send(token);
+      })
+      .catch(err => {
+        res.send(err)
       })
     } else {
       if(user.userIdFb == userIdFb) {

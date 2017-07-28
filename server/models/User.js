@@ -13,7 +13,7 @@ const userSchema = new Schema({
   userIdFb: {
     type: String,
     required: [true, 'UserIdFb tidak boleh kosong']
-  }
+  },
   postlist: [{type: Schema.Types.ObjectId, ref: 'Post'}]
 }, {
   timestamps: true

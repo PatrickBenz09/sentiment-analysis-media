@@ -4,10 +4,10 @@ const userCont = require('../controllers/usersController');
 const userauth = require('../helpers/verifyToken')
 
 router.get('/', userCont.getAllUsers)
-router.get('/:id', userCont.getSingleUser)
+router.get('/:id', userauth.verifytokenforLogin, userCont.getSingleUser)
 router.post('/', userCont.addNewUser)
-router.post('/:id', userCont.pushToPostList)
-router.put('/:id', userCont.updateUser)
-router.delete('/:id', userCont.deleteUser)
+router.post('/:id', userauth.verifytokenforLogin, userCont.pushToPostList)
+router.put('/:id', userauth.verifytokenforLogin, userCont.updateUser)
+router.delete('/:id', userauth.verifytokenforLogin, userCont.deleteUser)
 
 module.exports = router

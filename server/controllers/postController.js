@@ -24,7 +24,8 @@ function addNewPost(req, res) {
   Post.create({
     post: req.body.post,
     emotion: req.body.emotion,
-    song: req.body.song
+    song: req.body.song,
+    email: req.body.email
   })
   .then(result => {
     res.send(result)

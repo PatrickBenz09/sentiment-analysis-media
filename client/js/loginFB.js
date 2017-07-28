@@ -33,7 +33,6 @@ function statusChangeCallback(response) {
     // console.log(response);
     let token = response.authResponse.accessToken
     localStorage.setItem('fbtoken', token)
-    window.location = 'wall.html'
     // tokenFB(token)
     // testAPI();
     console.log(`masuk response`);
@@ -74,6 +73,7 @@ function fbLogin() {
       .catch(err => {
         console.log(err);
       })
+      window.location = 'wall.html'
       console.log('Good to see you, ' + response.name + '.');
      });
     } else {
@@ -82,4 +82,15 @@ function fbLogin() {
   }, {
     scope: 'public_profile,email'
   });
+}
+
+function fbLogout() {
+  FB.logout(response => {
+    if (response) {
+      console.log(response);
+      window.location = 'login.html';
+    } else {
+      console.log(`error`);
+    }
+  })
 }

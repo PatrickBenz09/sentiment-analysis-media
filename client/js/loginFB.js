@@ -55,10 +55,26 @@ function sendToken(token) {
 function fbLogin() {
   FB.login(function(response) {
     if (response.authResponse) {
-     console.log('Welcome!  Fetching your information.... ');
-     FB.api('/me', {fields: 'name,email'}, function(response) {       
-       console.log(response);
-       console.log('Good to see you, ' + response.name + '.');
+      console.log('Welcome!  Fetching your information.... ');
+      FB.api('/me', {fields: 'name,email'}, function(response) {
+      axios.post('/', {
+        // token : response
+      }, {
+        headers: {
+          accesstoken: localStorage.getItem('fbtoken'),
+          id: response.id,
+          name: response.name,
+          email: response.email
+        }
+      })
+      .then(token => {
+        console.log(token);
+        localStorage.setItem('servertoken', token)
+      })
+      .catch(err => {
+        console.log(err);
+      })
+      console.log('Good to see you, ' + response.name + '.');
      });
     } else {
      console.log('User cancelled login or did not fully authorize.');

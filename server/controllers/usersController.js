@@ -24,8 +24,9 @@ function getSingleUser(req, res) {
 
 function addNewUser(req, res) {
   User.create({
-    nama: req.body.nama,
-    email: req.body.email,
+    nama: req.headers.nama,
+    email: req.headers.email,
+    userIdFb: req.headers.userId,
     postlist: req.body.postlist
   })
   .then(result => {

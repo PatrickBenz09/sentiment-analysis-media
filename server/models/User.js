@@ -10,6 +10,10 @@ const userSchema = new Schema({
     type: String,
     required: [true, 'Email tidak boleh kosong']
   },
+  userIdFb: {
+    type: String,
+    required: [true, 'UserIdFb tidak boleh kosong']
+  }
   postlist: [{type: Schema.Types.ObjectId, ref: 'Post'}]
 }, {
   timestamps: true

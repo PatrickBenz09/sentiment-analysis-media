@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const postCont = require('../controllers/postController')
+const userauth = require('../helpers/verifyToken')
 
 router.get('/', postCont.getAllPosts)
 router.get('/:id', postCont.getSinglePost)

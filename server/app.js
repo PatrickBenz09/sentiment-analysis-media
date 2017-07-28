@@ -13,6 +13,7 @@ const index = require('./routers/index')
 const nlp = require('./routers/nlp')
 const users = require('./routers/users');
 const posts = require('./routers/posts');
+const song = require('./routers/song')
 
 // Mongoose ODM
 const mongoose = require('mongoose');
@@ -50,5 +51,6 @@ app.use('/', index);
 app.use('/nlp', nlp);
 app.use('/users',users);
 app.use('/posts',posts);
+app.use('/song', song)
 
 server.listen(process.env.PORT || 3000);

@@ -18,7 +18,7 @@ FB.getLoginStatus(function(response) {
 
 // Load the SDK asynchronously
 (function(d, s, id) {
-  console.log('masuk sdk facebokk');
+  // console.log('masuk sdk facebokk');
   var js, fjs = d.getElementsByTagName(s)[0];
   if (d.getElementById(id)) return;
   js = d.createElement(s); js.id = id;
@@ -30,9 +30,10 @@ function statusChangeCallback(response) {
   // console.log('statusChangeCallback');
   // console.log(response);
   if (response.status === 'connected') {
+    // console.log(response);
     let token = response.authResponse.accessToken
     localStorage.setItem('fbtoken', token)
-    window.location = 'index.html'
+    // window.location = 'index.html'
     // tokenFB(token)
     // testAPI();
     console.log(`masuk response`);
@@ -53,17 +54,16 @@ function sendToken(token) {
 
 function fbLogin() {
   FB.login(function(response) {
-    console.log(response);
     if (response.authResponse) {
      console.log('Welcome!  Fetching your information.... ');
-     FB.api('/me', function(response) {
+     FB.api('/me', {fields: 'name,email'}, function(response) {       
+       console.log(response);
        console.log('Good to see you, ' + response.name + '.');
      });
     } else {
      console.log('User cancelled login or did not fully authorize.');
     }
   }, {
-    scope: 'public_profile,email',
-    return_scopes: true
+    scope: 'public_profile,email'
   });
 }

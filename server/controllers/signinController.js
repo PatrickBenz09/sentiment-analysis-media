@@ -1,32 +1,40 @@
 const User = require('../models/User');
 const jwt = require('jsonwebtoken')
-require('dotenv').config()
+const FB = require('fb');
+const fb = new FB.Facebook({version: 'v2.8'});
+// require('dotenv').config()
+
+const setAccessToken = (req, res, next) => {
+  FB.setAccessToken(req.headers.accesstoken);
+  next()
+}
 
 function signin(req, res, next) {
-  let username = req.body.username
-  let password = req.body.password
-
+  let userIdFbFromLogin = req.headers.userId
   User.findOne({
-    where: {username: username}
+    where: {
+      userIdFb: userIdFbFromLogin}
   })
   .then(user=> {
-    // var saltUserLogin = user.salt
-    // var passwordUserLogin = req.body.password
-
-    // var getPasswordUser = genSalt.createHash(passwordUserLogin, saltUserLogin)
-    // console.log('ini password dari form    ',getPasswordUser);
-    // console.log('ini password dari database',user.password);
-    if(user.email == email) {
-      var token = jwt.sign({accesstoken: accesstoken, username: user.name, useremail:user.email}, process.env.SECRET);
-      res.send(token);
+    if(!user) {
+      User.create({
+        nama: req.headers.nama,
+        email: req.headers.email,
+        userIdFb: userIdFbFromLogin,
+        postlist: ""
+      })
+      .then(function(){
+        var token = jwt.sign({accesstoken: accesstoken, nama: req.headers.nama, useremail:req.headers.email, userIdFb: req.headers.userId}, '24BI04PS');
+        res.send(token);
+      })
     } else {
-      res.send('Maaf username atau password salah')
+      if(user.userIdFb == userIdFb) {
+        var token = jwt.sign({accesstoken: accesstoken, nama: user.nama, useremail:user.email, userIdFb: user.userIdFb}, '24BI04PS');
+        res.send(token);
+      } else {
+        res.send('Maaf username atau password salah')
+      }
     }
-  })
-  .catch(err => {
-    return res.status(400).send({
-      message: err.message
-    })
   })
 }
 

@@ -1,20 +1,22 @@
 'use strict'
 
 const express = require('express');
+const app = express();
+
 const path = require('path');
 const bodyParser = require('body-parser');
 const cors = require('cors')
 const server = require('http').Server(app);
 const io = require('socket.io')(server);
 
-const app = express();
+const index = require('./routers/index')
 const nlp = require('./routers/nlp')
 const users = require('./routers/users');
 const posts = require('./routers/posts');
 
 // Mongoose ODM
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost:27017/dbsentiment', err => {
+mongoose.connect('mongodb://localhost/dbsentiment', err => {
   err ? console.log(err) : console.log('database connected')
 });
 
@@ -50,5 +52,3 @@ app.use('/users',users);
 app.use('/posts',posts);
 
 server.listen(process.env.PORT || 3000);
-
-

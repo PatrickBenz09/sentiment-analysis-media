@@ -9,6 +9,7 @@ const cors = require('cors')
 const server = require('http').Server(app);
 const io = require('socket.io')(server);
 
+const signin = require('./routers/signin')
 const index = require('./routers/index')
 const nlp = require('./routers/nlp')
 const users = require('./routers/users');
@@ -47,6 +48,7 @@ app.use(bodyParser.json());
 app.use(cors())
 
 app.use('/', index);
+app.use('/signin', signin);
 app.use('/nlp', nlp);
 app.use('/users',users);
 app.use('/posts',posts);

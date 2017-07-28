@@ -20,8 +20,7 @@ function signin(req, res, next) {
     name: ${req.headers.name}
     `);
   User.findOne({
-    where: {
-      userIdFb: userIdFbFromLogin}
+      userIdFb: userIdFbFromLogin
   })
   .then(user=> {
     if(!user) {

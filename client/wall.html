@@ -3,6 +3,7 @@
   <head>
     <meta charset="utf-8">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/login.css">
     <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
@@ -10,106 +11,39 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="js/loginFB.js"></script>
     <title>Wall</title>
+    <style media="screen">
+      .margin-top-bottom-50 {
+        margin-top: 50px;
+        margin-bottom: 50px;
+      }
+    </style>
   </head>
   <body>
     <div class="container">
       <button type="button" onclick="fbLogout()">logout</button>
-      <form class="" id="postForm" action="#" method="post">
+      <form class="" id="processForm" action="#" method="post">
         <div class="form-group">
-          <label for="post"></label>
-          <textarea class="form-control" id="post" rows="3" placeholder="Share with us your story.."></textarea>
+          <label for="processed"></label>
+          <textarea class="form-control" id="processed" rows="3" placeholder="Share with us your story.."></textarea>
         </div>
-        <button type="submit" class="btn btn-default">Submit</button>
+        <button type="submit" class="btn btn-default">Process</button>
         <span>Signed in as user: </span><span id="username"></span>
       </form>
 
-      <div class="" id="postCollection" border="1px solid black">
+      <form class="" id="postForm" action="#" method="post">
+        <div class="form-group" id="emotionSpectrums">
+        </div>
+        <button type="submit" class="btn btn-default">Post</button>
+      </form>
 
+      <div class="margin-top-bottom-50" id="postCollection" border="1px solid black">
       </div>
+
     </div>
 
     <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
-    <!--<script src="http://localhost:3000/socket.io/socket.io.js"></script>-->
+    <script src="node_modules/socket.io/socket.io.js"></script>
     <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>-->
-    <script type="text/javascript">
-      $(function() {
-        //let socket = io.connect();
-
-        //GET
-        let $username = $('#username')
-
-        axios.get('/wall')
-        .then(res => {
-          console.log(res);
-          $username.html('hay');
-        })
-        .catch(err => {
-          console.log(err);
-        })
-
-        // POST
-        let $postForm = $('#postForm');
-        let $post = $('#post');
-        let $post_collection = $('#postCollection');
-
-        $postForm.submit(function(e) {
-          e.preventDefault();
-
-          axios.post('http://localhost:3000/nlp', {
-            post: $post.val(),
-            username: $username.html()
-          })
-          .then(res => {
-            let sentimentOverallFromKeywordsSum = 0;
-            let sentimentOverallFromKeywordsCondition = "";
-            let sentimentOverallFromKeywordsConclusion = "Unknown";
-
-            console.log(res);
-            if(res.data.entities.length != 0) {
-              //
-            } else {
-              res.data.keywords.forEach(key => {
-                sentimentOverallFromKeywordsSum += (key.sentiment.score * 100);
-              })
-
-              if(sentimentOverallFromKeywordsSum >= 100) sentimentOverallFromKeywordsCondition = `Tremendously Happy`;
-              else if(sentimentOverallFromKeywordsSum >= 75) sentimentOverallFromKeywordsCondition = `Very Happy`;
-              else if(sentimentOverallFromKeywordsSum >= 50) sentimentOverallFromKeywordsCondition = `Happy`;
-              else if(sentimentOverallFromKeywordsSum >= 25) sentimentOverallFromKeywordsCondition = `Probably Happy`;
-              else if(sentimentOverallFromKeywordsSum > 0) sentimentOverallFromKeywordsCondition = `Probably a Little Bit Happy`;
-
-              else if(sentimentOverallFromKeywordsSum == 0) sentimentOverallFromKeywordsCondition = `Probably Confused.. Get Some Rest`;
-
-              else if(sentimentOverallFromKeywordsSum <= -100) sentimentOverallFromKeywordsCondition = `Tremendously Sad`;
-              else if(sentimentOverallFromKeywordsSum <= -75) sentimentOverallFromKeywordsCondition = `Very Sad`;
-              else if(sentimentOverallFromKeywordsSum <= -50) sentimentOverallFromKeywordsCondition = `Sad`;
-              else if(sentimentOverallFromKeywordsSum <= -25) sentimentOverallFromKeywordsCondition = `Probably Sad`;
-              else if(sentimentOverallFromKeywordsSum < -0) sentimentOverallFromKeywordsCondition = `Probably a Little Bit Sad`;
-
-              sentimentOverallFromKeywordsConclusion = `You're ${sentimentOverallFromKeywordsCondition}, with emotion probability of ${Math.abs(sentimentOverallFromKeywordsSum)}%`
-            }
-
-            console.log(sentimentOverallFromKeywordsSum + "-----------------");
-            $post_collection.prepend(`
-              <div>Your Feeling: <b>${sentimentOverallFromKeywordsConclusion}</b></div>`)
-            // console.log(res.data.post);
-            // $post_collection.prepend(`
-            //   <div>${res.data.post}</div>
-            //   <div>posted by ${res.data.username}</div>`)
-            //socket.emit('create post', res.data.username, res.data.post);
-          })
-          .catch(err => {
-            console.log(err);
-          })
-        })
-
-        // socket.on('new post', (data) => {
-        //   $post_collection.prepend(`
-        //     <div>${data.post}</div>
-        //     <div>posted by ${data.username}</div>`)
-        // })
-
-      })
-    </script>
+    <script src="js/wall.js"></script>
   </body>
 </html>

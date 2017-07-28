@@ -33,7 +33,7 @@ function statusChangeCallback(response) {
     // console.log(response);
     let token = response.authResponse.accessToken
     localStorage.setItem('fbtoken', token)
-    // window.location = 'index.html'
+    window.location = 'wall.html'
     // tokenFB(token)
     // testAPI();
     console.log(`masuk response`);
@@ -48,16 +48,16 @@ function checkLoginState() {
   });
 }
 
-function sendToken(token) {
-  axios.post('')
-}
-
 function fbLogin() {
   FB.login(function(response) {
     if (response.authResponse) {
       console.log('Welcome!  Fetching your information.... ');
       FB.api('/me', {fields: 'name,email'}, function(response) {
-      axios.post('/', {
+        let email = response.email
+        console.log(email);
+        localStorage.setItem('emailUser', response.email)
+        localStorage.setItem('nameUser', response.name)
+        axios.post('/', {
         // token : response
       }, {
         headers: {

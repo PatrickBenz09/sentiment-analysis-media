@@ -29,7 +29,7 @@ var get = function (req, res) {
       else {
         let response = {}
         response.status = `success`
-        response.url = `https://www.youtube.com/watch?v=${result.items[0].id.videoId}`
+        response.url = `https://www.youtube.com/embed?v=${result.items[0].id.videoId}`
         response.title = result.items[0].snippet.title
         res.send(response)
       }

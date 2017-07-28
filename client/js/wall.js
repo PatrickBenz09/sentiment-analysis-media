@@ -8,7 +8,7 @@ $(function() {
   .then(res => {
     console.log(res);
     console.log('aaaaaaaaaaaaaaaaaaaaaaa');
-    $username.html('hay');
+    $username.html(localstorage.getItem('nameUser'));
   })
   .catch(err => {
     console.log(err);
